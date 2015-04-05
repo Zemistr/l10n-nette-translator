@@ -63,7 +63,7 @@ services:
         class: Nette\Caching\Storages\FileStorage(%appDir%/Texts) # Texts will be saved in %appDir%/Texts as file named by ISO 639-1
         autowired: false
 
-    translator_simple_nette_storage: l10nNetteTranslator\Storage\SimpleNetteStorage(@translator_storage)
+    translator_simple_nette_storage: l10nNetteTranslator\Storage\SimpleNetteStorage(@translator_nette_storage)
 
 ```
 
