@@ -7,6 +7,8 @@
 # l10nNetteTranslator
 l10n translator for [Nette](http://nette.org/) with simple panel for [Tracy](http://tracy.nette.org/en/)
 
+![Tracy-Panel](http://zemistr.github.io/l10n-nette-translator/images/tracy-panel.png)
+
 ## Packagist
 l10nNetteTranslator is available on [Packagist.org](https://packagist.org/packages/zemistr/l10n-nette-translator),
 just add the dependency to your composer.json.
