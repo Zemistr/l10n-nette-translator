@@ -1,27 +1,27 @@
-[![Build Status](https://travis-ci.org/Zemistr/l10nNetteTranslator.svg?branch=master)](https://travis-ci.org/Zemistr/l10nNetteTranslator)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Zemistr/l10nNetteTranslator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Zemistr/l10nNetteTranslator/?branch=master)
-[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Zemistr/l10nNetteTranslator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Zemistr/l10nNetteTranslator/?branch=master)
-[![Packagist Total Downloads](https://img.shields.io/packagist/dt/zemistr/l10nNetteTranslator.svg)](https://packagist.org/packages/zemistr/l10nNetteTranslator)
-[![License](https://img.shields.io/packagist/l/zemistr/l10nNetteTranslator.svg)](http://opensource.org/licenses/mit-license.php)
+[![Build Status](https://travis-ci.org/Zemistr/l10n-nette-translator.svg?branch=master)](https://travis-ci.org/Zemistr/l10n-nette-translator)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/?branch=master)
+[![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/?branch=master)
+[![Packagist Total Downloads](https://img.shields.io/packagist/dt/zemistr/l10n-nette-translator.svg)](https://packagist.org/packages/zemistr/l10n-nette-translator)
+[![License](https://img.shields.io/packagist/l/zemistr/l10n-nette-translator.svg)](http://opensource.org/licenses/mit-license.php)
 
 # l10nNetteTranslator
 l10n translator for [Nette](http://nette.org/) with simple panel for [Tracy](http://tracy.nette.org/en/)
 
 ## Packagist
-l10nNetteTranslator is available on [Packagist.org](https://packagist.org/packages/zemistr/l10nNetteTranslator),
+l10nNetteTranslator is available on [Packagist.org](https://packagist.org/packages/zemistr/l10n-nette-translator),
 just add the dependency to your composer.json.
 
 ```javascript
 {
   "require" : {
-    "zemistr/l10nNetteTranslator": "1.*"
+    "zemistr/l10n-nette-translator": "1.*"
   }
 }
 ```
 
 or run Composer command:
 ```php
-php composer.phar require zemistr/l10nNetteTranslator
+php composer.phar require zemistr/l10n-nette-translator
 ```
 
 ## Usage without composer
