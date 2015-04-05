@@ -16,7 +16,7 @@ translator:
             default: true # if is not set, the first language will be set as default
 
     # storage is optional
-    storage: @translator_storage_adapter # must implements l10nNetteTranslator\Storage\IStorage
+    storage: @translator_simple_nette_storage # must implements l10nNetteTranslator\Storage\IStorage
 
 services:
     # You can use any storage implements Nette\Caching\IStorage
