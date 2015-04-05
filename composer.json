@@ -1,5 +1,5 @@
 {
-  "name": "zemistr/l10nnettetranslator",
+  "name": "zemistr/l10n-nette-translator",
   "description": "Simple l10n translator panel for Tracy",
   "keywords": [
     "l10n",
@@ -8,7 +8,7 @@
     "nette",
     "tracy"
   ],
-  "homepage": "https://github.com/zemistr/l10nnettetranslator",
+  "homepage": "https://github.com/Zemistr/l10n-nette-translator",
   "minimum-stability": "stable",
   "license": "MIT",
   "authors": [
