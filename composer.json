@@ -1,0 +1,35 @@
+{
+  "name": "zemistr/l10nnettetranslator",
+  "description": "Simple l10n translator panel for Tracy",
+  "keywords": [
+    "l10n",
+    "localization",
+    "translator",
+    "nette",
+    "tracy"
+  ],
+  "homepage": "https://github.com/zemistr/l10nnettetranslator",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Martin Zeman (Zemistr)",
+      "homepage": "http://zemistr.eu"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "zemistr/l10n": "1.*",
+    "nette/di": "2.3.*",
+    "nette/php-generator": "2.3.*",
+    "nette/application": "2.3.*",
+    "nette/http": "2.3.*",
+    "nette/utils": "2.3.*",
+    "tracy/tracy": "2.3.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "l10nNetteTranslator\\": "src/l10nNetteTranslator"
+    }
+  }
+}

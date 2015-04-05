@@ -1,0 +1,371 @@
+<style>
+	#l10nNTP-list_wrapper {
+		height: 400px;
+		max-width: 400px;
+		min-width: 300px;
+		overflow: auto
+	}
+
+	#l10nNTP-left_panel .l10nNTP-active {
+		font-weight: bold;
+	}
+
+	#l10nNTP-left_panel .l10nNTP-untranslated {
+		color: #c20;
+	}
+
+	#l10nNTP-left_panel .l10nNTP-translated,
+	#l10nNTP-left_panel .l10nNTP-untranslated {
+		cursor: pointer;
+	}
+
+	#l10nNTP-left_panel .l10nNTP-translated:hover,
+	#l10nNTP-left_panel .l10nNTP-untranslated:hover {
+		text-decoration: underline;
+	}
+
+	#l10nNTP-right_panel {
+		width: 300px;
+		position: relative
+	}
+
+	#l10nNTP-right_panel-plurals {
+		border: 1px solid #e6dfbf;
+		left: 4px;
+		max-height: 347px;
+		overflow: auto;
+		padding: 5px;
+		position: absolute;
+		right: 5px;
+		top: 50px;
+	}
+
+	#l10nNTP-right_panel strong {
+		color: #655e5e;
+	}
+
+	#l10nNTP-key,
+	#l10nNTP-right_panel textarea {
+		background-color: #fff;
+		border: 1px solid #e6dfbf;
+		margin-bottom: 10px;
+		width: 100%;
+	}
+
+	#l10nNTP-right_panel button,
+	#l10nNTP-add {
+		border: 1px solid;
+		font-weight: bold;
+		padding: 5px;
+		text-align: center;
+		width: 148px;
+	}
+
+	#l10nNTP-right_panel-btns {
+		bottom: 5px;
+		position: absolute;
+	}
+
+	#l10nNTP-langs_wrapper {
+		background-color: #e6dfbf !important;
+		margin-top: 3px !important;
+		padding: 5px !important;
+	}
+
+	#l10nNTP-langs {
+		background-color: #fff !important;
+		padding: 2px 5px 2px 0 !important;
+	}
+
+	#l10nNTP-add {
+		background-color: #e7d997;
+		border-color: #b0a15b;
+		color: #7b703a;
+		cursor: pointer;
+		width: 20px;
+		padding: 0;
+	}
+
+	#l10nNTP-add:hover {
+		background-color: #d6c574;
+	}
+
+	#l10nNTP-save {
+		background-color: #baffb7 !important;
+		border-color: #0f7711 !important;
+		color: #0f7711;
+	}
+
+	#l10nNTP-save:hover {
+		background-color: #6ed769 !important;
+	}
+
+	#l10nNTP-remove {
+		background-color: #ffc5b7 !important;
+		border-color: #770f0f !important;
+		color: #770f0f;
+	}
+
+	#l10nNTP-remove:hover {
+		background-color: #e77676 !important;
+	}
+</style>
+<script>
+	var l10nNTP = {
+		plurals: 1,
+		language: null,
+		clean: function () {
+			this.setId('');
+			this.setKey('');
+
+			for (var i = 0; i < this.plurals; i++) {
+				this.setText(i, '');
+			}
+		},
+		setId: function (id) {
+			this.id = id;
+		},
+		getId: function () {
+			return this.id;
+		},
+		setKey: function (key) {
+			var obj = this.getById('l10nNTP-key');
+			obj.value = key;
+
+			if (key == '') {
+				obj.removeAttribute('disabled');
+			}
+			else {
+				obj.setAttribute('disabled', 'disabled');
+			}
+		},
+		getKey: function () {
+			return this.getById('l10nNTP-key').value;
+		},
+		setText: function (plural, text) {
+			(this.getById('l10nNTP-plural-' + plural) || {}).value = text;
+		},
+		getText: function (plural) {
+			return (this.getById('l10nNTP-plural-' + plural) || {value: ''}).value;
+		},
+		setActive: function (obj) {
+			[].forEach.call(document.querySelectorAll('.l10nNTP-active'), function (el) {
+				el.classList.remove('l10nNTP-active');
+			});
+
+			obj && obj.classList.add('l10nNTP-active');
+		},
+		click: function (obj) {
+			this.setActive(obj);
+			this.clean();
+			var data_json = JSON.parse(obj.getAttribute('data-json') || '{}'), plural;
+
+			if (data_json.key) {
+				this.setId(data_json.id);
+				this.setKey(data_json.key);
+
+				for (plural in data_json.texts) {
+					this.setText(plural, data_json.texts[plural]);
+				}
+			}
+		},
+		showLoader: function () {
+			this.getById('l10nNTP-loader').style.display = 'inline-block';
+		},
+		hideLoader: function () {
+			this.getById('l10nNTP-loader').style.display = 'none';
+		},
+		buildParams: function (params) {
+			var query = [], key, encoded_key, value;
+			for (key in params) {
+				encoded_key = encodeURIComponent(key);
+
+				if (arguments[1]) {
+					encoded_key = arguments[1] + '[' + encoded_key + ']';
+				}
+
+				if (typeof params[key] === 'object') {
+					value = this.buildParams(params[key], encoded_key);
+
+					if (value !== '') {
+						query.push(value);
+					}
+				}
+				else {
+					query.push(encoded_key + "=" + encodeURIComponent(params[key]));
+				}
+			}
+
+			return query.join('&');
+		},
+		send: function (data) {
+			this.showLoader();
+			var self = this;
+			var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+			request.onreadystatechange = function () {
+				if (request.readyState == 4) {
+					if (request.status == 200) {
+						var response = JSON.parse(request.responseText), key;
+
+						if (response.hasOwnProperty('message') && response.message) {
+							alert(response.message);
+							return;
+						}
+
+						for (key in (response.actions || [])) {
+							var action = response.actions[key] + 'Action';
+
+							if (self.hasOwnProperty(action)) {
+								self[action](response, request);
+							}
+						}
+					}
+					else {
+						alert('Error');
+					}
+
+					self.hideLoader();
+				}
+			};
+			request.open("POST", '', true);
+			request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+			request.setRequestHeader('Connection', 'close');
+			request.send(this.buildParams({'<?= l10nNetteTranslator\TranslatorProcessor::PARAMETER ?>': data}));
+		},
+		getById: function (id) {
+			return document.getElementById(id);
+		},
+		htmlentities: function (text) {
+			return String(text).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+		},
+		changeLanguage: function (obj) {
+			this.language = obj.value;
+			this.clean();
+			this.send(
+				{
+					action: 'init',
+					language: this.language
+				}
+			);
+		},
+		save: function () {
+			var data = {}, text, i;
+			data.action = 'saveText';
+			data.language = this.language;
+			data.id = this.getId();
+			data.key = this.getKey();
+			data.texts = {};
+
+			for (i = 0; i < this.plurals; i++) {
+				text = this.getText(i);
+
+				if (text != '') {
+					data.texts[i] = text;
+				}
+			}
+
+			this.send(data);
+		},
+		remove: function () {
+			var data = {};
+			data.action = 'removeText';
+			data.language = this.language;
+			data.id = this.getId();
+			data.key = this.getKey();
+			this.send(data);
+		},
+		initAction: function () {
+			this.send({action: 'init'});
+		},
+		buildLanguagesAction: function (response) {
+			var html = '', key, language;
+
+			for (key in response.languages) {
+				language = response.languages[key];
+				html += '<option value="' + language.code + '">' + language.english_name + ' (' + language.original_name + ')</li>';
+			}
+
+			this.getById('l10nNTP-langs').innerHTML = html;
+		},
+		setLanguageAction: function (response) {
+			var obj = this.getById('l10nNTP-langs');
+			obj.value = response.language;
+			this.language = obj.value;
+		},
+		loadListAction: function () {
+			this.send(
+				{
+					action: 'loadList',
+					language: this.language
+				}
+			);
+		},
+		buildListAction: function (response) {
+			var html = '', key, text;
+
+			for (key in response.texts) {
+				text = response.texts[key];
+				html += '<li id="' + text.id + '" class="l10nNTP-' + (text.status ? '' : 'un') + 'translated"';
+				html += ' data-json="' + this.htmlentities(JSON.stringify(text)) + '" onclick="l10nNTP.click(this)">' + text.key + '</li>';
+			}
+
+			this.getById('l10nNTP-list').innerHTML = html;
+		},
+		buildPluralsFormAction: function (response) {
+			this.plurals = response.plurals_count;
+			var html = '', i;
+
+			for (i = 0; i < response.plurals_count; i += 1) {
+				html += '<strong>' + (i > 0 ? "Plural: " + i : "Singular/Plural: " + i) + '</strong>';
+				html += '<textarea id="l10nNTP-plural-' + i + '"></textarea>';
+				html += '<br>';
+			}
+
+			this.getById('l10nNTP-right_panel-plurals').innerHTML = html;
+		},
+		cleanAction: function (response) {
+			this.clean();
+		},
+		selectItemAction: function (response) {
+			var obj = this.getById(response.select);
+			obj && this.click(obj);
+			obj && obj.scrollIntoView();
+		}
+	};
+</script>
+<div id="l10nNTP">
+	<h1>Translator
+		<img id="l10nNTP-loader" src="data:image/gif;base64,R0lGODlhEAAQAPQAAP///wAAAPj4+Dg4OISEhAYGBiYmJtbW1qioqBYWFnZ2dmZmZuTk5JiYmMbGxkhISFZWVgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAAFUCAgjmRpnqUwFGwhKoRgqq2YFMaRGjWA8AbZiIBbjQQ8AmmFUJEQhQGJhaKOrCksgEla+KIkYvC6SJKQOISoNSYdeIk1ayA8ExTyeR3F749CACH5BAkKAAAALAAAAAAQABAAAAVoICCKR9KMaCoaxeCoqEAkRX3AwMHWxQIIjJSAZWgUEgzBwCBAEQpMwIDwY1FHgwJCtOW2UDWYIDyqNVVkUbYr6CK+o2eUMKgWrqKhj0FrEM8jQQALPFA3MAc8CQSAMA5ZBjgqDQmHIyEAIfkECQoAAAAsAAAAABAAEAAABWAgII4j85Ao2hRIKgrEUBQJLaSHMe8zgQo6Q8sxS7RIhILhBkgumCTZsXkACBC+0cwF2GoLLoFXREDcDlkAojBICRaFLDCOQtQKjmsQSubtDFU/NXcDBHwkaw1cKQ8MiyEAIfkECQoAAAAsAAAAABAAEAAABVIgII5kaZ6AIJQCMRTFQKiDQx4GrBfGa4uCnAEhQuRgPwCBtwK+kCNFgjh6QlFYgGO7baJ2CxIioSDpwqNggWCGDVVGphly3BkOpXDrKfNm/4AhACH5BAkKAAAALAAAAAAQABAAAAVgICCOZGmeqEAMRTEQwskYbV0Yx7kYSIzQhtgoBxCKBDQCIOcoLBimRiFhSABYU5gIgW01pLUBYkRItAYAqrlhYiwKjiWAcDMWY8QjsCf4DewiBzQ2N1AmKlgvgCiMjSQhACH5BAkKAAAALAAAAAAQABAAAAVfICCOZGmeqEgUxUAIpkA0AMKyxkEiSZEIsJqhYAg+boUFSTAkiBiNHks3sg1ILAfBiS10gyqCg0UaFBCkwy3RYKiIYMAC+RAxiQgYsJdAjw5DN2gILzEEZgVcKYuMJiEAOwAAAAAAAAAAAA=="/>
+	</h1>
+
+	<div class="tracy-inner">
+		<table>
+			<tr>
+				<td id="l10nNTP-left_panel">
+					<div id="l10nNTP-langs_wrapper">
+						<select id="l10nNTP-langs" onchange="l10nNTP.changeLanguage(this)"></select>
+						<button id="l10nNTP-add" onclick="l10nNTP.click(this)">+</button>
+					</div>
+					<div id="l10nNTP-list_wrapper">
+						<ul id="l10nNTP-list"></ul>
+					</div>
+				</td>
+				<td id="l10nNTP-right_panel">
+					<div id="l10nNTP-right_panel-key">
+						<strong>Key</strong>
+						<input type="text" id="l10nNTP-key"/>
+					</div>
+					<div id="l10nNTP-right_panel-plurals"></div>
+					<div id="l10nNTP-right_panel-btns">
+						<button id="l10nNTP-save" onclick="l10nNTP.save()">Save</button>
+						<button id="l10nNTP-remove" onclick="l10nNTP.remove()">Remove</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<script>
+	l10nNTP.initAction();
+</script>
