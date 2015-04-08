@@ -34,7 +34,7 @@ require('src/l10nNetteTranslator.php');
 ```
 
 ## Example usage (standard usage with file storage)
-Just add following lines into your config:
+Just add following code into the [config.neon](http://doc.nette.org/en/2.3/configuring):
 
 ```yaml
 extensions:
@@ -67,6 +67,50 @@ services:
 
 ```
 
+and add into presenter this code:
+
+```yaml
+/** @var \l10nNetteTranslator\Translator */
+protected $translator;
+
+public function injectTranslator(\l10nNetteTranslator\Translator $translator) {
+    $this->translator = $translator;
+    $this->template->setTranslator($translator);
+}
+```
+
+## Example usage in form
+```php
+class XxxPresenter extends \Nette\Application\UI\Presenter {
+    public function createComponentForm() {
+        $form = new Form();
+        $form->setTranslator($this->translator);
+        ...
+        return $form;
+    }
+}
+```
+
+## Example usage in [Latte](http://latte.nette.org)
+```latte
+{_'Basket'}
+```
+
+or
+
+```latte
+{_}Order{/_}
+```
+
+## How can I change the language?
+```php
+class XxxPresenter extends \Nette\Application\UI\Presenter {
+    public function actionDefault() {
+        // argument must be ISO 639-1 code
+        $this->translator->setActiveLanguageCode('cs');
+    }
+}
+```
 
 -----
 

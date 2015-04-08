@@ -275,8 +275,11 @@
 			data.key = this.getKey();
 			this.send(data);
 		},
-		initAction: function () {
-			this.send({action: 'init'});
+		init: function (language) {
+			this.send({
+				action: 'init',
+				language: language
+			});
 		},
 		buildLanguagesAction: function (response) {
 			var html = '', key, language;
@@ -367,5 +370,5 @@
 	</div>
 </div>
 <script>
-	l10nNTP.initAction();
+	l10nNTP.init('<?= $lang_code ?>');
 </script>
