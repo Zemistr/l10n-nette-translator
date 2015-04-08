@@ -93,13 +93,17 @@ class XxxPresenter extends \Nette\Application\UI\Presenter {
 
 ## Example usage in [Latte](http://latte.nette.org)
 ```latte
-{_'Basket'}
-```
+// users -> singular => %n% person
+// users -> plural 1 => %n% people
 
-or
+{_'users'} // 1 person
+{_'users', 0} // 0 people
+{_'users', 50} // 50 people
 
-```latte
-{_}Order{/_}
+----
+
+// user -> singular => I am %firstname% %lastname%
+{_'user', 1, ['%firstname%' => 'John','%lastname%' => 'Doe']} // I am John Doe
 ```
 
 ## How can I change the language?
