@@ -69,7 +69,7 @@ services:
 
 and add into presenter this code:
 
-```yaml
+```php
 /** @var \l10nNetteTranslator\Translator */
 protected $translator;
 
