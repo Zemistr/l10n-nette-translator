@@ -46,7 +46,7 @@ class Translator extends Object implements ITranslator {
 	}
 
 	/**
-	 * @param $code
+	 * @param string $code
 	 * @throws InvalidStateException
 	 */
 	public function setActiveLanguageCode($code) {
@@ -56,7 +56,7 @@ class Translator extends Object implements ITranslator {
 	}
 
 	/**
-	 * @param $code
+	 * @param string $code
 	 * @return \l10nNetteTranslator\LanguageAndPlural
 	 * @throws InvalidStateException
 	 */
