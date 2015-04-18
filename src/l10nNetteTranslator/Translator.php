@@ -21,6 +21,9 @@ class Translator extends Object implements ITranslator {
 	/** @var string */
 	private $active_language_code;
 
+	/**
+	 * @param string $code
+	 */
 	protected function testLanguageCode($code) {
 		if (empty($this->languages_and_plurals[$code])) {
 			throw new InvalidStateException(sprintf('Language with code "%s" is not set', $code));
