@@ -55,6 +55,10 @@ class TranslatorTest extends BaseTest {
 		/** @var \l10n\Plural\IPlural|PHPUnit_Framework_MockObject_MockObject $mock */
 		$mock = $this->getMock('l10n\Plural\IPlural');
 
+		$mock->expects($this->any())
+			->method("getPluralsCount")
+			->willReturn(1);
+
 		return $mock;
 	}
 
