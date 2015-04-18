@@ -103,6 +103,7 @@ class XxxPresenter extends \Nette\Application\UI\Presenter {
 ----
 
 // user -> singular => I am %firstname% %lastname%
+{_'user', ['%firstname%' => 'John','%lastname%' => 'Doe']} // I am John Doe
 {_'user', 1, ['%firstname%' => 'John','%lastname%' => 'Doe']} // I am John Doe
 ```
 
