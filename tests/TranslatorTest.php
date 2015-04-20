@@ -215,4 +215,14 @@ class TranslatorTest extends BaseTest {
 		$this->assertSame('foo', $translator->translate('foo', 0));
 		$this->assertSame('foo', $translator->translate('foo', 0, []));
 	}
+
+	public function testHasLanguageAndPluralByCode() {
+		$translator = new Translator();
+		$language_and_plural = new LanguageAndPlural();
+
+		$this->setProperty($translator, 'languages_and_plurals', ['cs' => $language_and_plural]);
+
+		$this->assertTrue($translator->hasLanguageAndPluralByCode('cs'));
+		$this->assertFalse($translator->hasLanguageAndPluralByCode('sk'));
+	}
 }

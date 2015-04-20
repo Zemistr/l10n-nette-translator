@@ -70,6 +70,14 @@ class Translator extends Object implements ITranslator {
 	}
 
 	/**
+	 * @param string $code
+	 * @return bool
+	 */
+	public function hasLanguageAndPluralByCode($code) {
+		return isset($this->languages_and_plurals[$code]);
+	}
+
+	/**
 	 * @return \l10nNetteTranslator\LanguageAndPlural
 	 * @throws InvalidStateException
 	 */
