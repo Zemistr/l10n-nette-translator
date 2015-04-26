@@ -75,7 +75,10 @@ protected $translator;
 
 public function injectTranslator(\l10nNetteTranslator\Translator $translator) {
     $this->translator = $translator;
-    $this->template->setTranslator($translator);
+}
+
+protected function beforeRender() {
+    $this->template->setTranslator($this->translator);
 }
 ```
 
