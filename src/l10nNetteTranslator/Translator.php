@@ -59,6 +59,13 @@ class Translator extends Object implements ITranslator {
 	}
 
 	/**
+	 * @return string|null
+	 */
+	public function getActiveLanguageCode() {
+		return $this->active_language_code;
+	}
+
+	/**
 	 * @param string $code
 	 * @return \l10nNetteTranslator\LanguageAndPlural
 	 * @throws InvalidStateException

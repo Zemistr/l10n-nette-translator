@@ -126,6 +126,17 @@ class TranslatorTest extends BaseTest {
 		$this->assertSame('en', $this->getProperty($translator, 'active_language_code'));
 	}
 
+	public function testSetAndGetActiveLanguageCode() {
+		$translator = new Translator();
+		$this->setProperty($translator, 'languages_and_plurals', ['cs' => true, 'en' => true]);
+
+		$translator->setActiveLanguageCode('cs');
+		$this->assertSame('cs', $translator->getActiveLanguageCode());
+
+		$translator->setActiveLanguageCode('en');
+		$this->assertSame('en', $translator->getActiveLanguageCode());
+	}
+
 	public function testGetLanguageByCodeWithException() {
 		$translator = new Translator();
 
