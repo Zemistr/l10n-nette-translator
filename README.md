@@ -1,8 +1,8 @@
 [![Build Status](https://travis-ci.org/Zemistr/l10n-nette-translator.svg?branch=master)](https://travis-ci.org/Zemistr/l10n-nette-translator)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/?branch=master)
 [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Zemistr/l10n-nette-translator/?branch=master)
-[![Packagist Total Downloads](https://img.shields.io/packagist/dt/zemistr/l10n-nette-translator.svg)](https://packagist.org/packages/zemistr/l10n-nette-translator)
-[![License](https://img.shields.io/packagist/l/zemistr/l10n-nette-translator.svg)](http://opensource.org/licenses/mit-license.php)
+[![Total Downloads](https://poser.pugx.org/zemistr/l10n-nette-translator/downloads)](https://packagist.org/packages/zemistr/l10n-nette-translator)
+[![License](https://poser.pugx.org/zemistr/l10n-nette-translator/license)](https://github.com/zemistr/l10n-nette-translator/blob/master/LICENSE.md)
 
 # l10nNetteTranslator
 l10n translator for [Nette](http://nette.org/) with simple panel for [Tracy](http://tracy.nette.org/en/)
