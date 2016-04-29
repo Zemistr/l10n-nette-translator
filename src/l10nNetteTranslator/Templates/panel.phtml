@@ -206,7 +206,7 @@
 			var request = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 			request.onreadystatechange = function () {
 				if (request.readyState == 4) {
-					if (request.status == 200) {
+					if (request.status.toString().match(/2\d\d/)) {
 						var response = JSON.parse(request.responseText), key;
 
 						if (response.hasOwnProperty('message') && response.message) {
@@ -232,7 +232,6 @@
 			request.open("POST", '', true);
 			request.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-			request.setRequestHeader('Connection', 'close');
 			request.send(this.buildParams({'<?= l10nNetteTranslator\TranslatorProcessor::PARAMETER ?>': data}));
 		},
 		getById: function (id) {
